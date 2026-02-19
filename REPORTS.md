@@ -2,10 +2,12 @@
 ## 1. Troubleshooting
 - **Masalah:** Kesalahan konfigurasi Nginx (/etc/nginx/sites-enabled/default)
 - **Solusi:** Melepas link dengan `sudo unlink /etc/nginx/sites-enabled/default`. Kemudian, saya edit `/etc/nginx/sites-available/default`, membenarkan typo, menambahkan `;` dan menambahkan `}` yang belum ada. Saya link kembali dengan command `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/`. Lalu, saya restart Nginx dengan `sudo systemctl reload nginx`.
-- **Bukti:** 
+- **Bukti:** ![Nginx sukses](assets/nginx-success.png)
 ## 2. Security
 
 Pertama, saya melakukan konfigurasi ufw untuk allow pada http,https, dan 6622/tcp. kemudian saya enable dengan `sudo ufw enable` dan restart ufw daemon dengan `sudo systemctl restart ufw`.
+
+![ufw rules](assets/ufw-rules.png)
 
 Lalu, saya membuat user imam-admin. Pemilihan nama ini untuk memperjelas siapa dan role dari pengguna user ini. Command yang saya gunakan untuk membuat user dan menambahkan sebagai sudoer sebagai berikut:
 
@@ -22,6 +24,8 @@ Kemudian, pada `/etc/ssh/sshd_config`, saya mengganti `PermitRootLogin` menjadi 
 sudo systemctl daemon-reload
 sudo systemctl restart ssh.socket
 ```
+
+~[SSH success](assets/ssh-success.png)
 
 ## 3. Containerization
 
@@ -42,6 +46,7 @@ Dan saya jalankan dengan args `--restart unless-stopped` agar otomatis berjalan 
 ```
 sudo docker run --restart unless-stopped --name app-test -d -p 8080:80 app-test
 ```
+![Docker success](assets/docker-success.png)
 
 ## 4. Automation
 
